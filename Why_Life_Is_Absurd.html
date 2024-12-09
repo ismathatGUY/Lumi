@@ -5,6 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Why Life Is Absurd</title>
+    <style>
+        /* Simple styling for the popup */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        #popup p {
+            margin: 0;
+            padding: 10px;
+        }
+
+        #popup button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #popup button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <pre>This is an archived page.
@@ -419,5 +451,61 @@ Lifetime,” forthcoming from Oxford University Press.
 © 2017 The New York Times Company
 
 </pre>
+
+<div id="popup">
+        <p id="popup-content"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
 </body>
+
+ <script>
+     // Function to get selected text
+        function getSelectedText() {
+            let selectedText = '';
+            if (window.getSelection) {
+                selectedText = window.getSelection().toString();
+            }
+            return selectedText;
+        }
+
+        // Function to show the popup with definition (placeholder text for now)
+        function showPopup(text) {
+            const popup = document.getElementById('popup');
+            const popupContent = document.getElementById('popup-content');
+
+            const normalizedText = text.trim().replace(/\s+/g, ' ');
+
+            // Here you can add a real definition from an API or dictionary service
+            let definition = 'Definition not found for "' + normalizedText + '".';
+
+            // Example dictionary for common words (this can be replaced by an API call)
+            //change it up for the proper document
+            const dictionary = {
+                'Leo Tolstoy': 'A brief description of who this fuckin guy is.',
+                'Dzigan and Shumacher routine': 'I assume two dudes who had a routine about time flying when you have fun.'
+            };
+
+            // Use dictionary if available
+            if (dictionary[normalizedText]) {
+                definition = dictionary[normalizedText];
+            }
+
+            popupContent.textContent = definition;
+            popup.style.display = 'block';
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+
+        // Event listener for mouseup event (when user highlights text)
+        document.addEventListener('mouseup', function () {
+            const selectedText = getSelectedText();
+            if (selectedText) {
+                showPopup(selectedText);
+            }
+        }); 
+ </script>
 </html>
